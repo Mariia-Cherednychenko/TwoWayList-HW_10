@@ -1,15 +1,40 @@
 package ua.ithlillel.dnipro.Cherednychenko;
 
-import java.util.Iterator;
-import java.util.function.Consumer;
-
 public class Main {
 
     public static void main(String[] args) {
-	OneWayList<String> s = new OneWayList<>();
-	s.add("Hello");
-	s.add("world");
-	s.add("!");
+	TwoWayList<String> s = new TwoWayList<>();
+		s.add("Hello");
+		s.add("mystery");
+		s.add("Java");
+		s.add("world");
+		s.add("!");
+
+		for (String elem : s) {
+			System.out.println(elem);
+		}
+
+		System.out.println("The List size is " + s.size());
+
+		s.add(":-)");
+
+		for (String elem : s) {
+			System.out.println(elem);
+		}
+
+		System.out.println(s.get(2));
+
+		s.set(2, "Java programming");
+
+		for (String elem : s) {
+			System.out.println(elem);
+		}
+
+		TwoWayList.ListBackIterator revIterator = s.reverseIterator();
+		while (revIterator.hasPrev()){
+			System.out.println(revIterator.prev());
+		}
+
 
 	/*for (int i=0; i<s.size();i++){
         System.out.println(s.get(i));
@@ -28,10 +53,6 @@ public class Main {
 		while (iterator.hasNext()){
 			System.out.println(iterator.next());
 		}*/
-
-		for (String elem : s) {
-			System.out.println(elem);
-		}
 
 
     }

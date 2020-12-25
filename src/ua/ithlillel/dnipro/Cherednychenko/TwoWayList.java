@@ -10,12 +10,11 @@ public class TwoWayList<T> implements Iterable<T>{
 
     @Override
     public Iterator<T> iterator() {
-        return new OneWayListIterator();
+        return new ListIterator();
     }
 
-    private class OneWayListIterator implements Iterator <T>{
-
-        Node cur=head;
+    private class ListIterator<T> implements Iterator<T> {
+        Node cur= head;
 
         @Override
         public boolean hasNext() {
@@ -29,6 +28,26 @@ public class TwoWayList<T> implements Iterable<T>{
             return val;
         }
     }
+
+    public  ListBackIterator reverseIterator(){
+        return  new ListBackIterator();
+    }
+
+
+    public class ListBackIterator   {
+        Node curTail = tail.prev;
+
+        public boolean hasPrev() {
+            return curTail != null;
+        }
+
+        public T prev() {
+            T val = (T) curTail.value;
+            curTail = curTail.prev;
+            return val;
+        }
+    }
+
 
     private class Node {
         T value;
@@ -54,17 +73,28 @@ public class TwoWayList<T> implements Iterable<T>{
             this.next = next;
         }
 
+        Node prev;
+
+        public Node getPrev() {
+            return prev;
+        }
+
+        public void setPrev(Node prev) {
+            this.prev = prev;
+
+        }
     }
 
     public int size(){
         return size;
     }
 
-    public void add(T value) {
+     public void add(T value) {
         Node n = new Node(value);
         if (head == null) {
             head = tail = n;
         } else {
+            n.prev=tail;
             tail.next = n;
             tail = n;
         }
@@ -72,9 +102,19 @@ public class TwoWayList<T> implements Iterable<T>{
     }
 
     private Node getNodeByIndex(int index) {
-        Node cur = head;
-        for (int i=0; i<index; i++ ){cur=cur.next;}
-        return cur;
+        if (index <= (int) (size / 2)) {
+            Node cur = head;
+            for (int i = 0; i < index; i++) {
+                cur = cur.next;
+            }
+            return cur;
+        } else {
+            Node cur = tail;
+            for (int i = 0; i < index; i++) {
+                cur = cur.prev;
+            }
+            return cur;
+        }
     }
 
     public T get (int index){
